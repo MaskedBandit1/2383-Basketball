@@ -48,6 +48,7 @@ public class OI {
     	
     	
     	shooterCycleFastButton.whileHeld(new ShooterCycleFast());
+    	shooterCycleFastButton.whenInactive(new ShooterCycleStop());
     	shooterCycleFastButton.whenReleased(new ShooterCycleStop());
     	
     	

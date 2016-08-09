@@ -3,9 +3,11 @@ package org.usfirst.frc.team2383.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import org.usfirst.frc.team2383.robot.auto.AutoCommand;
 import org.usfirst.frc.team2383.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2383.robot.subsystems.Feeder;
 import org.usfirst.frc.team2383.robot.subsystems.Shooter;
@@ -20,9 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends IterativeRobot {
-	
-	
+public class Robot extends IterativeRobot {	
 	
 	// Subsystems
 	public static final Drivetrain drivetrain = new Drivetrain();
@@ -30,12 +30,15 @@ public class Robot extends IterativeRobot {
 	public static final Feeder feeder = new Feeder();
 	public static OI oi = new OI();
 	public static final Robot Robot = new Robot();
+	
+	CommandGroup autonomousCommand;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
+    	autonomousCommand = new AutoCommand();
     }
 	
 	/**
@@ -52,8 +55,14 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 	}
 	
+	public void autonomousInit() {
+        // schedule the autonomous command (example)
+        if (autonomousCommand != null) autonomousCommand.start();
+    }
+	
     public void teleopInit() {
-		shooter.ShooterStop();
+    	if (autonomousCommand != null) autonomousCommand.cancel();
+    	shooter.ShooterStop();
 		feeder.feederStop();
     }
 
@@ -70,5 +79,9 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+    }
+    
+    public void autonomousPeriodic() {
+        Scheduler.getInstance().run();
     }
 }

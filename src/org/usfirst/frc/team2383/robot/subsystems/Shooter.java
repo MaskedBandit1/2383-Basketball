@@ -20,12 +20,12 @@ public class Shooter extends Subsystem {
     }
     
     public void ShooterForward(){
-    	shooter.set(0.95);
+    	shooter.set(1.0);
     }
     
     
     public void ShooterBackward(){
-    	shooter.set(-0.95);
+    	shooter.set(-1.0);
     }
     
     public void ShooterStop(){

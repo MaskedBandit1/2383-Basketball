@@ -18,6 +18,8 @@ public class ShooterCycleStop extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	System.out.println("Shooter is stopping cycle!");
+    	Robot.feeder.feederStop();
+    	Robot.shooter.ShooterStop();
     }
 
     // Called repeatedly when this Command is scheduled to run
